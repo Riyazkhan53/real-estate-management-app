@@ -95,12 +95,120 @@ const seedData = {
       status: 'active',
     },
   ],
+  partners: [
+    {
+      id: '1',
+      stage: 'new-prospect',
+      prospectName: 'Rajesh Kumar',
+      phone: '+91 98765 43210',
+      email: 'rajesh.k@email.com',
+      propertyName: 'Green Valley Residences',
+      unitNumber: 'A-1204',
+      partnerName: 'Michael Thompson',
+      partnerPhone: '+1 (512) 555-0101',
+      siteAddress: '',
+      eventDate: '2026-05-28',
+      visitTime: '',
+      bookingAmount: 0,
+      registrationNumber: '',
+      cancellationReason: '',
+      paymentAmount: 0,
+      notes: 'Referred by existing customer. Interested in 3BHK.',
+    },
+    {
+      id: '2',
+      stage: 'tomorrow-site-visit',
+      prospectName: 'Priya Sharma',
+      phone: '+91 91234 56789',
+      email: 'priya.s@email.com',
+      propertyName: 'Green Valley Residences',
+      unitNumber: 'B-0802',
+      partnerName: 'Emily Rodriguez',
+      partnerPhone: '+1 (512) 555-0100',
+      siteAddress: '120 Green Valley Blvd, Austin, TX',
+      eventDate: new Date(Date.now() + 86400000).toISOString().slice(0, 10),
+      visitTime: '10:30',
+      bookingAmount: 0,
+      registrationNumber: '',
+      cancellationReason: '',
+      paymentAmount: 0,
+      notes: 'Family of 4, prefers east-facing unit.',
+    },
+    {
+      id: '3',
+      stage: 'booking-done',
+      prospectName: 'David Wilson',
+      phone: '+1 (512) 555-0188',
+      email: 'david.w@email.com',
+      propertyName: 'Downtown Commerce Hub',
+      unitNumber: 'C-15',
+      partnerName: 'Michael Thompson',
+      partnerPhone: '+1 (512) 555-0101',
+      siteAddress: '',
+      eventDate: '2026-05-20',
+      visitTime: '',
+      bookingAmount: 50000,
+      registrationNumber: '',
+      cancellationReason: '',
+      paymentAmount: 0,
+      notes: 'Token amount received. Registration pending.',
+    },
+    {
+      id: '4',
+      stage: 'registration-completed',
+      prospectName: 'Anita Desai',
+      phone: '+91 99887 76655',
+      email: 'anita.d@email.com',
+      propertyName: 'Green Valley Residences',
+      unitNumber: 'A-0501',
+      partnerName: 'Emily Rodriguez',
+      partnerPhone: '+1 (512) 555-0100',
+      siteAddress: '',
+      eventDate: '2026-05-15',
+      visitTime: '',
+      bookingAmount: 485000,
+      registrationNumber: 'REG-2026-004521',
+      cancellationReason: '',
+      paymentAmount: 0,
+      notes: 'Full registration completed at sub-registrar office.',
+    },
+  ],
+  attendance: [
+    {
+      id: '1',
+      partnerUsername: 'partner@realestate',
+      partnerName: 'Michael Thompson',
+      date: new Date().toISOString().slice(0, 10),
+      checkInAt: new Date(new Date().setHours(9, 15, 0, 0)).toISOString(),
+      checkOutAt: null,
+      durationMinutes: null,
+      status: 'checked-in',
+    },
+    {
+      id: '2',
+      partnerUsername: 'partner@realestate',
+      partnerName: 'Michael Thompson',
+      date: new Date(Date.now() - 86400000).toISOString().slice(0, 10),
+      checkInAt: new Date(Date.now() - 86400000 + 9 * 3600000).toISOString(),
+      checkOutAt: new Date(Date.now() - 86400000 + 18 * 3600000).toISOString(),
+      durationMinutes: 540,
+      status: 'checked-out',
+    },
+  ],
 }
 
 function loadData() {
   try {
     const stored = localStorage.getItem(STORAGE_KEY)
-    if (stored) return JSON.parse(stored)
+    if (stored) {
+      const parsed = JSON.parse(stored)
+      return {
+        ...seedData,
+        ...parsed,
+        partners: parsed.partners ?? seedData.partners,
+        attendance: parsed.attendance ?? seedData.attendance,
+      }
+    }
   } catch {
     /* use seed */
   }
@@ -121,14 +229,14 @@ export function DataProvider({ children }) {
   const addItem = (collection, item) => {
     setData((prev) => ({
       ...prev,
-      [collection]: [...prev[collection], { ...item, id: generateId() }],
+      [collection]: [...(prev[collection] || []), { ...item, id: generateId() }],
     }))
   }
 
   const updateItem = (collection, id, updates) => {
     setData((prev) => ({
       ...prev,
-      [collection]: prev[collection].map((item) =>
+      [collection]: (prev[collection] || []).map((item) =>
         item.id === id ? { ...item, ...updates } : item,
       ),
     }))
@@ -137,7 +245,7 @@ export function DataProvider({ children }) {
   const deleteItem = (collection, id) => {
     setData((prev) => ({
       ...prev,
-      [collection]: prev[collection].filter((item) => item.id !== id),
+      [collection]: (prev[collection] || []).filter((item) => item.id !== id),
     }))
   }
 
@@ -148,8 +256,11 @@ export function DataProvider({ children }) {
     customers: data.customers.length,
     properties: data.properties.length,
     members: data.members.length,
+    partners: (data.partners || []).length,
     activeProjects: data.projects.filter((p) => p.status === 'active').length,
     availableProperties: data.properties.filter((p) => p.status === 'available').length,
+    newProspects: (data.partners || []).filter((p) => p.stage === 'new-prospect').length,
+    bookingsDone: (data.partners || []).filter((p) => p.stage === 'booking-done').length,
   }
 
   return (

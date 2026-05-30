@@ -11,6 +11,7 @@ import {
 } from 'lucide-react'
 import { useSettings } from '../context/SettingsContext'
 import { useData } from '../context/DataContext'
+import { useAuth } from '../context/AuthContext'
 import { inputClass } from '../components/FormField'
 
 function SettingsSection({ title, description, icon: Icon, children }) {
@@ -80,6 +81,7 @@ function Toggle({ enabled, onChange, label, description }) {
 export default function Settings() {
   const { settings, updateSetting } = useSettings()
   const { data, resetData } = useData()
+  const { isPartner } = useAuth()
   const [resetConfirm, setResetConfirm] = useState(false)
   const [saved, setSaved] = useState(false)
 
@@ -147,50 +149,6 @@ export default function Settings() {
       </SettingsSection>
 
       <SettingsSection
-        title="General"
-        description="Office branding and display preferences"
-        icon={Building2}
-      >
-        <div className="space-y-5">
-          <div>
-            <label className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300">
-              Company / Office Name
-            </label>
-            <input
-              type="text"
-              value={settings.companyName}
-              onChange={(e) => updateSetting('companyName', e.target.value)}
-              className={inputClass}
-              placeholder="Real Estate Management"
-            />
-            <p className="mt-1.5 text-xs text-slate-500 dark:text-slate-400">
-              Shown in the sidebar and portal header
-            </p>
-          </div>
-
-          <div>
-            <label className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300">
-              Currency
-            </label>
-            <select
-              value={settings.currency}
-              onChange={(e) => updateSetting('currency', e.target.value)}
-              className={inputClass}
-            >
-              <option value="USD">USD — US Dollar ($)</option>
-              <option value="EUR">EUR — Euro (€)</option>
-              <option value="GBP">GBP — British Pound (£)</option>
-              <option value="INR">INR — Indian Rupee (₹)</option>
-              <option value="AED">AED — UAE Dirham (د.إ)</option>
-            </select>
-            <p className="mt-1.5 text-xs text-slate-500 dark:text-slate-400">
-              Used for property prices and project budgets
-            </p>
-          </div>
-        </div>
-      </SettingsSection>
-
-      <SettingsSection
         title="Notifications"
         description="Manage how you receive updates"
         icon={Bell}
@@ -203,11 +161,57 @@ export default function Settings() {
         />
       </SettingsSection>
 
-      <SettingsSection
-        title="Data Management"
-        description="Export or reset your local data"
-        icon={Coins}
-      >
+      {!isPartner && (
+        <>
+          <SettingsSection
+            title="General"
+            description="Office branding and display preferences"
+            icon={Building2}
+          >
+            <div className="space-y-5">
+              <div>
+                <label className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300">
+                  Company / Office Name
+                </label>
+                <input
+                  type="text"
+                  value={settings.companyName}
+                  onChange={(e) => updateSetting('companyName', e.target.value)}
+                  className={inputClass}
+                  placeholder="Real Estate Management"
+                />
+                <p className="mt-1.5 text-xs text-slate-500 dark:text-slate-400">
+                  Shown in the sidebar and portal header
+                </p>
+              </div>
+
+              <div>
+                <label className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300">
+                  Currency
+                </label>
+                <select
+                  value={settings.currency}
+                  onChange={(e) => updateSetting('currency', e.target.value)}
+                  className={inputClass}
+                >
+                  <option value="USD">USD — US Dollar ($)</option>
+                  <option value="EUR">EUR — Euro (€)</option>
+                  <option value="GBP">GBP — British Pound (£)</option>
+                  <option value="INR">INR — Indian Rupee (₹)</option>
+                  <option value="AED">AED — UAE Dirham (د.إ)</option>
+                </select>
+                <p className="mt-1.5 text-xs text-slate-500 dark:text-slate-400">
+                  Used for property prices and project budgets
+                </p>
+              </div>
+            </div>
+          </SettingsSection>
+
+          <SettingsSection
+            title="Data Management"
+            description="Export or reset your local data"
+            icon={Coins}
+          >
         <div className="space-y-4">
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <div>
@@ -272,6 +276,8 @@ export default function Settings() {
           </div>
         </div>
       </SettingsSection>
+        </>
+      )}
     </div>
   )
 }

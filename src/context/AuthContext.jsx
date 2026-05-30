@@ -1,16 +1,20 @@
 import { createContext, useContext, useState } from 'react'
+import { findUser, ROLES } from '../constants/auth'
 
 const STORAGE_KEY = 'rem-auth'
-
-const VALID_USERNAME = 'alex.mp@realestate'
-const VALID_PASSWORD = 'Sample'
 
 const AuthContext = createContext(null)
 
 function loadSession() {
   try {
     const stored = sessionStorage.getItem(STORAGE_KEY)
-    if (stored) return JSON.parse(stored)
+    if (stored) {
+      const parsed = JSON.parse(stored)
+      if (!parsed.role) {
+        return { ...parsed, role: 'admin', name: parsed.name || parsed.username }
+      }
+      return parsed
+    }
   } catch {
     /* ignore */
   }
@@ -21,8 +25,13 @@ export function AuthProvider({ children }) {
   const [user, setUser] = useState(loadSession)
 
   const login = (username, password) => {
-    if (username === VALID_USERNAME && password === VALID_PASSWORD) {
-      const session = { username }
+    const account = findUser(username, password)
+    if (account) {
+      const session = {
+        username: account.username,
+        role: account.role,
+        name: account.name,
+      }
       sessionStorage.setItem(STORAGE_KEY, JSON.stringify(session))
       setUser(session)
       return { success: true }
@@ -35,8 +44,13 @@ export function AuthProvider({ children }) {
     setUser(null)
   }
 
+  const isAdmin = user?.role === ROLES.ADMIN
+  const isPartner = user?.role === ROLES.PARTNER
+
   return (
-    <AuthContext.Provider value={{ user, login, logout, isAuthenticated: !!user }}>
+    <AuthContext.Provider
+      value={{ user, login, logout, isAuthenticated: !!user, isAdmin, isPartner }}
+    >
       {children}
     </AuthContext.Provider>
   )
