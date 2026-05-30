@@ -1,10 +1,11 @@
 import { useState } from 'react'
 import { FolderKanban, Pencil, Plus, Search, Trash2 } from 'lucide-react'
 import { useData } from '../context/DataContext'
+import { useSettings } from '../context/SettingsContext'
 import Modal from '../components/Modal'
 import ConfirmDialog from '../components/ConfirmDialog'
 import EmptyState from '../components/EmptyState'
-import { Badge, formatCurrency, formatDate, statusVariant } from '../components/Badge'
+import { Badge, formatDate, statusVariant } from '../components/Badge'
 import { FormField, FormActions, inputClass, selectClass, textareaClass } from '../components/FormField'
 
 const emptyProject = {
@@ -19,6 +20,7 @@ const emptyProject = {
 
 export default function Projects() {
   const { data, addItem, updateItem, deleteItem } = useData()
+  const { formatCurrency } = useSettings()
   const [search, setSearch] = useState('')
   const [modalOpen, setModalOpen] = useState(false)
   const [deleteId, setDeleteId] = useState(null)
@@ -58,8 +60,8 @@ export default function Projects() {
     <div className="space-y-6">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900">Projects</h1>
-          <p className="mt-1 text-slate-500">Manage development and sales projects</p>
+          <h1 className="text-2xl font-bold text-slate-900 dark:text-slate-100">Projects</h1>
+          <p className="mt-1 text-slate-500 dark:text-slate-400">Manage development and sales projects</p>
         </div>
         <button
           type="button"
@@ -97,12 +99,12 @@ export default function Projects() {
           }
         />
       ) : (
-        <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+        <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm dark:border-slate-700 dark:bg-slate-800">
           <div className="overflow-x-auto">
             <table className="w-full text-left text-sm">
               <thead>
-                <tr className="border-b border-slate-100 bg-slate-50/80">
-                  <th className="px-6 py-3.5 font-semibold text-slate-600">Project</th>
+                <tr className="border-b border-slate-100 bg-slate-50/80 dark:border-slate-700 dark:bg-slate-900/50">
+                  <th className="px-6 py-3.5 font-semibold text-slate-600 dark:text-slate-400">Project</th>
                   <th className="px-6 py-3.5 font-semibold text-slate-600">Location</th>
                   <th className="px-6 py-3.5 font-semibold text-slate-600">Status</th>
                   <th className="px-6 py-3.5 font-semibold text-slate-600">Timeline</th>
@@ -110,11 +112,11 @@ export default function Projects() {
                   <th className="px-6 py-3.5 font-semibold text-slate-600">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-100">
+              <tbody className="divide-y divide-slate-100 dark:divide-slate-700">
                 {filtered.map((project) => (
-                  <tr key={project.id} className="transition hover:bg-slate-50/50">
+                  <tr key={project.id} className="transition hover:bg-slate-50/50 dark:hover:bg-slate-700/30">
                     <td className="px-6 py-4">
-                      <p className="font-medium text-slate-900">{project.name}</p>
+                      <p className="font-medium text-slate-900 dark:text-slate-100">{project.name}</p>
                       <p className="mt-0.5 max-w-xs truncate text-xs text-slate-500">
                         {project.description}
                       </p>
@@ -128,7 +130,7 @@ export default function Projects() {
                     <td className="px-6 py-4 text-slate-600">
                       {formatDate(project.startDate)} — {formatDate(project.endDate)}
                     </td>
-                    <td className="px-6 py-4 font-medium text-slate-900">
+                    <td className="px-6 py-4 font-medium text-slate-900 dark:text-slate-100">
                       {formatCurrency(project.budget)}
                     </td>
                     <td className="px-6 py-4">

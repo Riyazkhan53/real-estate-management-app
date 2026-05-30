@@ -1,11 +1,11 @@
 export function Badge({ children, variant = 'default' }) {
   const variants = {
-    default: 'bg-slate-100 text-slate-700',
-    success: 'bg-emerald-100 text-emerald-700',
-    warning: 'bg-amber-100 text-amber-700',
-    danger: 'bg-red-100 text-red-700',
-    info: 'bg-blue-100 text-blue-700',
-    violet: 'bg-violet-100 text-violet-700',
+    default: 'bg-slate-100 text-slate-700 dark:bg-slate-700 dark:text-slate-300',
+    success: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300',
+    warning: 'bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-300',
+    danger: 'bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-300',
+    info: 'bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300',
+    violet: 'bg-violet-100 text-violet-700 dark:bg-violet-900/40 dark:text-violet-300',
   }
 
   return (
@@ -42,14 +42,6 @@ export function statusVariant(status) {
     support: 'default',
   }
   return map[status] || 'default'
-}
-
-export function formatCurrency(value) {
-  return new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
-    maximumFractionDigits: 0,
-  }).format(value || 0)
 }
 
 export function formatDate(date) {

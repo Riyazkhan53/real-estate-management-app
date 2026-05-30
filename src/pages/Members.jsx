@@ -58,8 +58,8 @@ export default function Members() {
     <div className="space-y-6">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900">Team Members</h1>
-          <p className="mt-1 text-slate-500">Manage office staff, agents, and partners</p>
+          <h1 className="text-2xl font-bold text-slate-900 dark:text-slate-100">Team Members</h1>
+          <p className="mt-1 text-slate-500 dark:text-slate-400">Manage office staff, agents, and partners</p>
         </div>
         <button
           type="button"
@@ -97,11 +97,11 @@ export default function Members() {
           }
         />
       ) : (
-        <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+        <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm dark:border-slate-700 dark:bg-slate-800">
           <div className="overflow-x-auto">
             <table className="w-full text-left text-sm">
               <thead>
-                <tr className="border-b border-slate-100 bg-slate-50/80">
+                <tr className="border-b border-slate-100 bg-slate-50/80 dark:border-slate-700 dark:bg-slate-900/50">
                   <th className="px-6 py-3.5 font-semibold text-slate-600">Member</th>
                   <th className="px-6 py-3.5 font-semibold text-slate-600">Role</th>
                   <th className="px-6 py-3.5 font-semibold text-slate-600">Department</th>
@@ -111,9 +111,9 @@ export default function Members() {
                   <th className="px-6 py-3.5 font-semibold text-slate-600">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-100">
+              <tbody className="divide-y divide-slate-100 dark:divide-slate-700">
                 {filtered.map((member) => (
-                  <tr key={member.id} className="transition hover:bg-slate-50/50">
+                  <tr key={member.id} className="transition hover:bg-slate-50/50 dark:hover:bg-slate-700/30">
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-3">
                         <div className="flex h-9 w-9 items-center justify-center rounded-full bg-violet-100 text-sm font-bold text-violet-700">
@@ -125,7 +125,7 @@ export default function Members() {
                             .toUpperCase()}
                         </div>
                         <div>
-                          <p className="font-medium text-slate-900">{member.name}</p>
+                          <p className="font-medium text-slate-900 dark:text-slate-100">{member.name}</p>
                           <p className="text-xs text-slate-500">{member.email}</p>
                         </div>
                       </div>

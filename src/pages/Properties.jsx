@@ -1,10 +1,11 @@
 import { useState } from 'react'
 import { Bed, Home, MapPin, Pencil, Plus, Search, Trash2 } from 'lucide-react'
 import { useData } from '../context/DataContext'
+import { useSettings } from '../context/SettingsContext'
 import Modal from '../components/Modal'
 import ConfirmDialog from '../components/ConfirmDialog'
 import EmptyState from '../components/EmptyState'
-import { Badge, formatCurrency, statusVariant } from '../components/Badge'
+import { Badge, statusVariant } from '../components/Badge'
 import { FormField, FormActions, inputClass, selectClass } from '../components/FormField'
 
 const emptyProperty = {
@@ -22,6 +23,7 @@ const emptyProperty = {
 
 export default function Properties() {
   const { data, addItem, updateItem, deleteItem } = useData()
+  const { formatCurrency } = useSettings()
   const [search, setSearch] = useState('')
   const [modalOpen, setModalOpen] = useState(false)
   const [deleteId, setDeleteId] = useState(null)
@@ -77,8 +79,8 @@ export default function Properties() {
     <div className="space-y-6">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900">Properties</h1>
-          <p className="mt-1 text-slate-500">Manage listings, sales, and rental inventory</p>
+          <h1 className="text-2xl font-bold text-slate-900 dark:text-slate-100">Properties</h1>
+          <p className="mt-1 text-slate-500 dark:text-slate-400">Manage listings, sales, and rental inventory</p>
         </div>
         <button
           type="button"
@@ -120,7 +122,7 @@ export default function Properties() {
           {filtered.map((property) => (
             <div
               key={property.id}
-              className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:shadow-md"
+              className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:shadow-md dark:border-slate-700 dark:bg-slate-800"
             >
               <div className="bg-gradient-to-br from-brand-600 to-brand-800 px-5 py-6 text-white">
                 <div className="flex items-start justify-between">
@@ -148,11 +150,11 @@ export default function Properties() {
                 <p className="mt-1 font-medium">{property.title}</p>
               </div>
               <div className="p-5">
-                <div className="flex items-center gap-1.5 text-sm text-slate-500">
+                <div className="flex items-center gap-1.5 text-sm text-slate-500 dark:text-slate-400">
                   <MapPin className="h-4 w-4 shrink-0" />
                   {property.address}, {property.city}
                 </div>
-                <div className="mt-3 flex flex-wrap gap-3 text-sm text-slate-600">
+                <div className="mt-3 flex flex-wrap gap-3 text-sm text-slate-600 dark:text-slate-400">
                   <Badge variant={statusVariant(property.type)}>{property.type}</Badge>
                   {property.bedrooms > 0 && (
                     <span className="flex items-center gap-1">

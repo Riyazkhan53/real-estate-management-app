@@ -57,8 +57,8 @@ export default function Customers() {
     <div className="space-y-6">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900">Customers</h1>
-          <p className="mt-1 text-slate-500">Manage buyers, sellers, tenants, and landlords</p>
+          <h1 className="text-2xl font-bold text-slate-900 dark:text-slate-100">Customers</h1>
+          <p className="mt-1 text-slate-500 dark:text-slate-400">Manage buyers, sellers, tenants, and landlords</p>
         </div>
         <button
           type="button"
@@ -100,7 +100,7 @@ export default function Customers() {
           {filtered.map((customer) => (
             <div
               key={customer.id}
-              className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition hover:shadow-md"
+              className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition hover:shadow-md dark:border-slate-700 dark:bg-slate-800"
             >
               <div className="flex items-start justify-between">
                 <div className="flex items-center gap-3">
@@ -115,7 +115,7 @@ export default function Customers() {
                     </span>
                   </div>
                   <div>
-                    <p className="font-semibold text-slate-900">{customer.name}</p>
+                    <p className="font-semibold text-slate-900 dark:text-slate-100">{customer.name}</p>
                     <Badge variant={statusVariant(customer.type)}>{customer.type}</Badge>
                   </div>
                 </div>
@@ -136,13 +136,13 @@ export default function Customers() {
                   </button>
                 </div>
               </div>
-              <div className="mt-4 space-y-1.5 text-sm text-slate-600">
+              <div className="mt-4 space-y-1.5 text-sm text-slate-600 dark:text-slate-400">
                 <p>{customer.email}</p>
                 <p>{customer.phone}</p>
                 <p className="text-slate-500">{customer.address}</p>
               </div>
               {customer.notes && (
-                <p className="mt-3 rounded-lg bg-slate-50 px-3 py-2 text-xs text-slate-500">
+                <p className="mt-3 rounded-lg bg-slate-50 px-3 py-2 text-xs text-slate-500 dark:bg-slate-700/50 dark:text-slate-400">
                   {customer.notes}
                 </p>
               )}

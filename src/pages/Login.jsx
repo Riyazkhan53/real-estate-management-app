@@ -53,25 +53,25 @@ export default function Login() {
         <p className="text-sm text-brand-200">© 2026 Real Estate Management</p>
       </div>
 
-      <div className="flex flex-1 items-center justify-center bg-slate-50 p-6">
+      <div className="flex flex-1 items-center justify-center bg-slate-50 p-6 dark:bg-slate-900">
         <div className="w-full max-w-md">
           <div className="mb-8 flex items-center gap-3 lg:hidden">
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-brand-600 text-white">
               <Building2 className="h-5 w-5" />
             </div>
             <div>
-              <p className="font-bold text-slate-900">Real Estate Management</p>
-              <p className="text-xs text-slate-500">Partner Portal</p>
+              <p className="font-bold text-slate-900 dark:text-slate-100">Real Estate Management</p>
+              <p className="text-xs text-slate-500 dark:text-slate-400">Partner Portal</p>
             </div>
           </div>
 
-          <div className="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
-            <h2 className="text-2xl font-bold text-slate-900">Welcome back</h2>
-            <p className="mt-1 text-sm text-slate-500">Sign in to access your dashboard</p>
+          <div className="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm dark:border-slate-700 dark:bg-slate-800">
+            <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-100">Welcome back</h2>
+            <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">Sign in to access your dashboard</p>
 
             <form onSubmit={handleSubmit} className="mt-8 space-y-5">
               <div>
-                <label className="mb-1.5 block text-sm font-medium text-slate-700">
+                <label className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300">
                   Username
                 </label>
                 <div className="relative">
@@ -89,7 +89,7 @@ export default function Login() {
               </div>
 
               <div>
-                <label className="mb-1.5 block text-sm font-medium text-slate-700">
+                <label className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300">
                   Password
                 </label>
                 <div className="relative">
@@ -114,7 +114,7 @@ export default function Login() {
               </div>
 
               {error && (
-                <div className="rounded-xl bg-red-50 px-4 py-3 text-sm text-red-600">
+                <div className="rounded-xl bg-red-50 px-4 py-3 text-sm text-red-600 dark:bg-red-900/30 dark:text-red-400">
                   {error}
                 </div>
               )}
